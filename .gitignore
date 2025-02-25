@@ -7,10 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node modules
 node_modules
+
+# Build output
 dist
 dist-ssr
 *.local
+target
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +26,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Rust specific
+Cargo.lock
+*.rmeta
+
+# Tauri specific
+src-tauri/target
+src-tauri/.gitignore
+src-tauri/gen
+src-tauri/icons/*.png
+src-tauri/icons/*.icns
+src-tauri/icons/*.ico
