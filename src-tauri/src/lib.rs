@@ -7,7 +7,8 @@ use bson::doc;
 use chrono::{Utc, Duration};
 #[derive(Debug, Serialize, Deserialize)]
 struct User {
-    username: String,
+    first_name: String,
+    last_name: String,
     password: String,
     email: String,
 }
@@ -54,13 +55,14 @@ pub fn run() {
         .expect("error while running tauri application");
 }
 #[tauri::command]
-async fn sign_up(state: State<'_, AppState>, username: String, password: String, email: String) -> Result<String, String> {
+async fn sign_up(state: State<'_, AppState>, first_name: String, last_name: String, password: String, email: String) -> Result<String, String> {
     let collection = state.client.database("datalyst").collection("users");
     let salt = b"random_salt"; // Replace with a securely generated salt
     let hashed_password = argon2::hash_encoded(password.as_bytes(), salt, &Config::default()).map_err(|e| e.to_string())?;
     
     let new_user = User {
-        username,
+        first_name,
+        last_name,
         password: hashed_password,
         email,
     };
@@ -68,9 +70,9 @@ async fn sign_up(state: State<'_, AppState>, username: String, password: String,
     Ok("User signed up successfully".into())
 }
 #[tauri::command]
-async fn sign_in(state: State<'_, AppState>, username: String, password: String) -> Result<String, String> {
+async fn sign_in(state: State<'_, AppState>, email: String, password: String) -> Result<String, String> {
     let collection = state.client.database("datalyst").collection("users");
-    let filter = doc! { "username": &username };
+    let filter = doc! { "email": &email };
     if let Some(user_doc) = collection.find_one(filter).await.map_err(|e| e.to_string())? {
         let user: User = bson::from_document(user_doc).map_err(|e| e.to_string())?;
         if argon2::verify_encoded(&user.password, password.as_bytes()).map_err(|e| e.to_string())? {
@@ -79,14 +81,14 @@ async fn sign_in(state: State<'_, AppState>, username: String, password: String)
                 .expect("valid timestamp")
                 .timestamp();
             let claims = Claims {
-                sub: username,
+                sub: email,
                 exp: expiration as usize,
             };
             let token = encode(&Header::default(), &claims, &EncodingKey::from_secret(state.jwt_secret.as_ref())).map_err(|e| e.to_string())?;
             return Ok(token);
         }
     }
-    Err("Invalid username or password".into())
+    Err("Invalid email or password".into())
 }
 #[tauri::command]
 async fn forgot_password(state: State<'_, AppState>, email: String) -> Result<String, String> {
