@@ -99,15 +99,15 @@ async fn sign_in(state: State<'_, AppState>, email: String, password: String) ->
     Err("Invalid email or password".into())
 }
 #[tauri::command]
-async fn forgot_password(state: State<'_, AppState>, email: String) -> Result<String, String> {
-    // Specify the type of the collection
+async fn forgot_password(state: State<'_, AppState>, email: String, password: String) -> Result<String, String> {
     let collection: Collection<User> = state.client.database("datalyst").collection("users");
     let filter = doc! { "email": &email };
-    // Use the specified type for the collection
-    if let Some(_) = collection.find_one(filter).await.map_err(|e| e.to_string())? {
-        // Here you would send an email to the user with a password reset link
-        // For simplicity, we'll just return a success message
-        return Ok("Password reset email sent".into());
+    if let Some(_) = collection.find_one(filter.clone()).await.map_err(|e| e.to_string())? {
+        let salt = b"random_salt"; // Replace with a securely generated salt
+        let hashed_password = argon2::hash_encoded(password.as_bytes(), salt, &Config::default()).map_err(|e| e.to_string())?;
+        let update = doc! { "$set": { "password": hashed_password } };
+        collection.update_one(filter, update).await.map_err(|e| e.to_string())?;
+        return Ok("Password reset successfully".into());
     }
-    Err("Email not found".into())
+    Err("User not found".into())
 }

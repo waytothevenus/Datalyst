@@ -16,8 +16,8 @@ export default function ForgotPasswordForm() {
   const handleForgotPassword = async () => {
     setIsSubmitting(true);
     try {
-      await invoke("forgot_password", { email });
-      notify("Password reset email sent.", "success");
+      await invoke("forgot_password", { email, password });
+      notify("Password reset successfully! Please signin now.", "success");
       navigate("/signin");
     } catch (error) {
       notify(new String(error).toString(), "error");

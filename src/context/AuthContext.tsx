@@ -40,6 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setToken(null);
     setIsAuthenticated(false);
     localStorage.removeItem("token");
+    navigate("/signin");
   };
 
   return (
