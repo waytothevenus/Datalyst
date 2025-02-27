@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 
 type AuthContextType = {
   token: string | null;
@@ -13,7 +13,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [token, setToken] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -24,7 +24,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setToken(savedToken);
       setIsAuthenticated(true);
     } else {
-      navigate("/signin");
+      // navigate("/signin");
     }
   }, []);
 

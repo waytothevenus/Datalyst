@@ -1,13 +1,47 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { useNavigate } from "react-router";
 import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
+import { invoke } from "@tauri-apps/api/core";
+import { notify } from "../../utils/utils";
 
 export default function SignUpForm() {
+  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSignUp = async () => {
+    setIsSubmitting(true);
+    try {
+      const result = await invoke("sign_up", {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      if (result) {
+        alert("Sign up successful!");
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
+        notify("Sign up successful! Please signin now.", "success");
+        navigate("/signin");
+      }
+    } catch (error) {
+      notify(new String(error).toString(), "error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="flex flex-col flex-1 w-full overflow-y-auto lg:w-1/2 no-scrollbar">
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
@@ -33,6 +67,8 @@ export default function SignUpForm() {
                       type="text"
                       id="fname"
                       name="fname"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
                       placeholder="Enter your first name"
                     />
                   </div>
@@ -45,6 +81,8 @@ export default function SignUpForm() {
                       type="text"
                       id="lname"
                       name="lname"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                       placeholder="Enter your last name"
                     />
                   </div>
@@ -58,6 +96,8 @@ export default function SignUpForm() {
                     type="email"
                     id="email"
                     name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
                   />
                 </div>
@@ -70,6 +110,8 @@ export default function SignUpForm() {
                     <Input
                       placeholder="Enter your password"
                       type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                     <span
                       onClick={() => setShowPassword(!showPassword)}
@@ -103,7 +145,11 @@ export default function SignUpForm() {
                 </div>
                 {/* <!-- Button --> */}
                 <div>
-                  <button className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
+                  <button
+                    onClick={handleSignUp}
+                    disabled={isSubmitting || !isChecked}
+                    className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600"
+                  >
                     Sign Up
                   </button>
                 </div>

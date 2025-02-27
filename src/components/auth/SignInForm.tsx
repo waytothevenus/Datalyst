@@ -8,6 +8,7 @@ import Button from "../ui/button/Button";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../context/AuthContext";
 import { invoke } from "@tauri-apps/api/core";
+import { notify } from "../../utils/utils";
 
 export default function SignInForm() {
   const navigate = useNavigate();
@@ -16,14 +17,19 @@ export default function SignInForm() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSignIn = async () => {
+    setIsSubmitting(true);
     try {
       const token = await invoke<string>("sign_in", { email, password });
       login(token);
+      notify("Sign in successful.", "success");
       navigate("/");
     } catch (error) {
-      alert(error);
+      notify(new String(error).toString(), "error");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -90,7 +96,12 @@ export default function SignInForm() {
                   </Link>
                 </div>
                 <div>
-                  <Button className="w-full" size="sm" onClick={handleSignIn}>
+                  <Button
+                    disabled={isSubmitting}
+                    className="w-full"
+                    size="sm"
+                    onClick={handleSignIn}
+                  >
                     Sign in
                   </Button>
                 </div>

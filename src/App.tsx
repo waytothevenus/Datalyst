@@ -19,11 +19,13 @@ import AppLayout from "./layout/AppLayout";
 import { AuthProvider } from "./context/AuthContext";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
+import { ToastContainer } from "react-toastify";
 
 export default function App() {
   return (
     <>
       <Router>
+        <ToastContainer />
         <ScrollToTop />
         <AuthProvider>
           <Routes>

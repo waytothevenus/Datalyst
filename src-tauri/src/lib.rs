@@ -57,15 +57,23 @@ pub fn run() {
 #[tauri::command]
 async fn sign_up(state: State<'_, AppState>, first_name: String, last_name: String, password: String, email: String) -> Result<String, String> {
     let collection = state.client.database("datalyst").collection("users");
+
+    // Check if the user already exists
+    let filter = doc! { "email": &email };
+    if collection.find_one(filter).await.map_err(|e| e.to_string())?.is_some() {
+        return Err("An account with this email already exists".into());
+    }
+
     let salt = b"random_salt"; // Replace with a securely generated salt
     let hashed_password = argon2::hash_encoded(password.as_bytes(), salt, &Config::default()).map_err(|e| e.to_string())?;
-    
+
     let new_user = User {
         first_name,
         last_name,
         password: hashed_password,
         email,
     };
+
     collection.insert_one(new_user).await.map_err(|e| e.to_string())?;
     Ok("User signed up successfully".into())
 }
