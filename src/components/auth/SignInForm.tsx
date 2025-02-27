@@ -54,6 +54,7 @@ export default function SignInForm() {
                   </Label>
                   <Input
                     placeholder="info@gmail.com"
+                    type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />

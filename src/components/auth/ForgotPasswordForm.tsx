@@ -10,6 +10,7 @@ import { notify } from "../../utils/utils";
 export default function ForgotPasswordForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleForgotPassword = async () => {
@@ -47,7 +48,19 @@ export default function ForgotPasswordForm() {
                   <Input
                     placeholder="info@gmail.com"
                     value={email}
+                    type="email"
                     onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Label>
+                    New Password <span className="text-error-500">*</span>{" "}
+                  </Label>
+                  <Input
+                    placeholder="Enter password here"
+                    value={password}
+                    type="password"
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div>
