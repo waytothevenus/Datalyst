@@ -1,157 +1,85 @@
-# TailAdmin React - Free React Tailwind Admin Dashboard Template
+# Tauri Project - Getting Started
 
-TailAdmin is a free and open-source admin dashboard template built on **React and Tailwind CSS**, providing developers with everything they need to create a comprehensive, data-driven back-end, 
-dashboard, or admin panel solution for upcoming web projects.
+This document outlines the steps to set up the development environment and run the this project.
 
-With TailAdmin, you get access to all the necessary dashboard UI components, elements, and pages required to build a feature-rich and complete dashboard or admin panel. Whether you're building dashboard or admin panel for a complex web application or a simple website, TailAdmin is the perfect solution to help you get up and running quickly.
+## Prerequisites
 
-![TailAdmin React.js Dashboard Preview](./banner.png)
+Before you begin, ensure you have the following installed:
 
-## Overview
+*   **Node.js:** (version 16 or higher recommended) - [https://nodejs.org/](https://nodejs.org/)
+*   **Rust:** (stable version) - [https://www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install)
+*   **Tauri CLI:**  Install globally using npm:
 
-TailAdmin provides essential UI components and layouts for building feature-rich, data-driven admin dashboards and control panels. It's built on:
-
-- React 18 (create-react-app)
-- TypeScript
-- Tailwind CSS
-
-### Quick Links
-- [✨ Visit Website](https://tailadmin.com)
-- [📄 Documentation](https://tailadmin.com/docs)
-- [⬇️ Download](https://tailadmin.com/download)
-- [🖌️ Figma Design File (Community Edition)](https://www.figma.com/community/file/1214477970819985778)
-- [⚡ Get PRO Version](https://tailadmin.com/pricing)
-
-### Demos
-- [Free Version](https://free-react-demo.tailadmin.com/)
-- [Pro Version](https://react-demo.tailadmin.com)
-
-### Other Versions
-- [HTML Version](https://github.com/TailAdmin/tailadmin-free-tailwind-dashboard-template)
-- [Next.js Version](https://github.com/TailAdmin/free-nextjs-admin-dashboard)
-- [Vue.js Version](https://github.com/TailAdmin/vue-tailwind-admin-dashboard)
-
-
-## Installation
-
-### Prerequisites
-To get started with TailAdmin, ensure you have the following prerequisites installed and set up:
-
-- Node.js 18.x or later (recommended to use Node.js 20.x or later)
-
-### Cloning the Repository
-Clone the repository using the following command:
-
-```bash
-git clone https://github.com/TailAdmin/free-react-tailwind-admin-dashboard.git
-```
-
-> Windows Users: place the repository near the root of your drive if you face issues while cloning.
-
-1. Install dependencies:
     ```bash
-    npm install
-    # or
-    yarn install
-    ```
-    > On `npm` some included packages can cause peer-deps issue with React 18 while installing.
-    >
-    > Use the `--legacy-peer-deps` flag, at the end of the installation command, as a workaround for that.
-
-2. Start the development server:
-    ```bash
-    npm run dev
-    # or
-    yarn dev
+    npm install -g @tauri-apps/cli
     ```
 
-## Components
+*   **System Dependencies:** Tauri requires certain system dependencies depending on your operating system.  Refer to the official Tauri documentation for details: [https://tauri.app/v1/guides/getting-started/prerequisites](https://tauri.app/v1/guides/getting-started/prerequisites)
 
-TailAdmin is a pre-designed starting point for building a web-based dashboard using React.js and Tailwind CSS. The template includes:
+    *   **Windows:**  WebView2 runtime.
+    *   **macOS:**  Xcode command-line tools.
+    *   **Linux:**  webkit2gtk, gtk3, libappindicator
 
-- Sophisticated and accessible sidebar
-- Data visualization components
-- Prebuilt profile management and 404 page
-- Tables and Charts(Line and Bar)
-- Authentication forms and input elements
-- Alerts, Dropdowns, Modals, Buttons and more
-- Can't forget Dark Mode 🕶️
+## Development Environment Setup
 
-All components are built with React and styled using Tailwind CSS for easy customization.
+1.  **Clone the Repository:**
 
-## Feature Comparison
+    ```bash
+    git clone <repository_url>
+    cd <project_directory>
+    ```
 
-### Free Version
-- 1 Unique Dashboard
-- 30+ dashboard components
-- 50+ UI elements
-- Basic Figma design files
-- Community support
+2.  **Install Dependencies:**
 
-### Pro Version
-- 5 Unique Dashboards: Analytics, Ecommerce, Marketing, CRM, Stocks (more coming soon)
-- 400+ dashboard components and UI elements
-- Complete Figma design file
-- Email support
+    ```bash
+    npm install  # Or yarn install, pnpm install, bun install, depending on your package manager
+    ```
 
-To learn more about pro version features and pricing, visit our [pricing page](https://tailadmin.com/pricing).
+3.  **Install Rust Target (if necessary):**
 
-## Changelog
+    If you are building for a specific target architecture, you may need to add the Rust target:
 
-### Version 2.0.0 - [February 2025]
-A major update with comprehensive redesign and modern React patterns implementation.
+    ```bash
+    rustup target add <target>
+    ```
 
-#### Major Improvements
-- Complete UI redesign with modern React patterns
-- New features: collapsible sidebar, chat, and calendar
-- Improved performance and accessibility
-- Updated data visualization using ApexCharts
+    Replace `<target>` with the appropriate target triple (e.g., `x86_64-unknown-linux-gnu`).
 
-#### Key Features
-- Redesigned dashboards (Ecommerce, Analytics, Marketing, CRM)
-- Enhanced navigation with React Router integration
-- Advanced tables with sorting and filtering
-- Calendar with drag-and-drop support
-- New UI components and improved existing ones
+## Running the Project
 
-#### Breaking Changes
-- Updated sidebar component API
-- Migrated charts to ApexCharts
-- Revised authentication system
+1.  **Development Mode:**
 
-[Read more](https://tailadmin.com/docs/update-logs/react) on this release.
+    To run the project in development mode (with hot reloading), use the following command:
 
-### Version 1.3.7 - [June 20, 2024]
+    ```bash
+    npm run tauri dev
+    ```
 
-#### Enhancements
+    This will start the development server and open the Tauri application.  Any changes you make to the front-end code will be automatically reflected in the application.
 
-1. Remove Repetition of DefaultLayout in every Pages
-2. Add ClickOutside Component for reduce repeated functionality in Header Message, Notification and User Dropdowns.
+2.  **Building for Production:**
 
-### Version 1.3.6 - [Jan 31, 2024]
+    To build the project for production, use the following command:
 
-#### Enhancements
+    ```bash
+    npm run tauri build
+    ```
 
-1. Integrate flatpickr in [Date Picker/Form Elements]
-2. Change color after select an option [Select Element/Form Elements].
-3. Make it functional [Multiselect Dropdown/Form Elements].
-4. Make best value editable [Pricing Table One/Pricing Table].
-5. Rearrange Folder structure.
+    This will create an optimized application bundle in the `src-tauri/target/release` directory.
 
-### Version 1.2.0 - [Apr 28, 2023]
+## Troubleshooting
 
-- Add Typescript in TailAdmin React.
+*   **Missing Dependencies:** If you encounter errors related to missing dependencies, refer to the Tauri documentation for your operating system to ensure you have all the required system libraries installed.
+*   **Build Errors:** If you encounter build errors, try cleaning the project and rebuilding:
 
-### Version 1.0.0 - Initial Release - [Mar 13, 2023]
+    ```bash
+    rm -rf src-tauri/target
+    tauri build
+    ```
 
-- Initial release of TailAdmin React.
+*   **Tauri CLI Issues:** If the `tauri` command is not found, ensure that the `@tauri-apps/cli` package is installed globally and that your `npm` or `yarn` bin directory is in your system's `PATH`.
 
+## Further Information
 
-
-## License
-
-TailAdmin React.js Free Version is released under the MIT License.
-
-## Support
-
-If you find this project helpful, please consider giving it a star on GitHub. Your support helps us continue developing and maintaining this template.
+*   **Tauri Documentation:** [https://tauri.app/](https://tauri.app/)
+*   **Rust Documentation:** [https://www.rust-lang.org/](https://www.rust-lang.org/)
