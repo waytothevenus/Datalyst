@@ -30,7 +30,7 @@ export default function ResetPasswordForm() {
 
     setIsSubmitting(true);
     try {
-      await invoke("reset_password", { email, otp, new_password: newPassword });
+      await invoke("reset_password", { email, otp, newPassword });
       notify("Password reset successfully! Please sign in now.", "success");
       navigate("/signin");
     } catch (error) {

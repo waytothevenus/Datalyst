@@ -16,7 +16,7 @@ export default function ForgotPasswordForm() {
     setIsSubmitting(true);
     try {
       await invoke("forgot_password", { email });
-      notify("Password reset successfully! Please signin now.", "success");
+      notify("Sent code successfully.", "success");
       navigate("/reset-password");
     } catch (error) {
       notify(new String(error).toString(), "error");
