@@ -23,7 +23,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (savedToken) {
       setToken(savedToken);
       setIsAuthenticated(true);
-      if (currentPath == "/signin" || currentPath == "signup") {
+      if (currentPath == "/signin" || currentPath == "/signup") {
         navigate("/home");
       }
     } else {
