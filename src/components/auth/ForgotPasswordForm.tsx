@@ -10,15 +10,14 @@ import { notify } from "../../utils/utils";
 export default function ForgotPasswordForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleForgotPassword = async () => {
     setIsSubmitting(true);
     try {
-      await invoke("forgot_password", { email, password });
+      await invoke("forgot_password", { email });
       notify("Password reset successfully! Please signin now.", "success");
-      navigate("/signin");
+      navigate("/reset-password");
     } catch (error) {
       notify(new String(error).toString(), "error");
     } finally {
@@ -53,24 +52,13 @@ export default function ForgotPasswordForm() {
                   />
                 </div>
                 <div>
-                  <Label>
-                    New Password <span className="text-error-500">*</span>{" "}
-                  </Label>
-                  <Input
-                    placeholder="Enter password here"
-                    value={password}
-                    type="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                <div>
                   <Button
                     disabled={isSubmitting}
                     className="w-full"
                     size="sm"
                     onClick={handleForgotPassword}
                   >
-                    {isSubmitting ? "Sending..." : "Send Reset Link"}
+                    {isSubmitting ? "Sending..." : "Send OTP"}
                   </Button>
                 </div>
               </div>

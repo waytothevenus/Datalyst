@@ -4,9 +4,9 @@
   "version": "2.0.1",
   "type": "module",
   "scripts": {
-    "tauri migrate": "tauri migrate",
-    "tauri dev": "tauri dev",
-    "tauri build": "tauri build",
+    "tauri:migrate": "tauri migrate",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
