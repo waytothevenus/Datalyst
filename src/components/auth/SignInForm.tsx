@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
 import Button from "../ui/button/Button";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { invoke } from "@tauri-apps/api/core";
 import { notify } from "../../utils/utils";
@@ -25,7 +25,7 @@ export default function SignInForm() {
       const token = await invoke<string>("sign_in", { email, password });
       login(token);
       notify("Sign in successful.", "success");
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       notify(new String(error).toString(), "error");
     } finally {
