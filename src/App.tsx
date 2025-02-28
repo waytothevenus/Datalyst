@@ -32,7 +32,7 @@ export default function App() {
         <AuthProvider>
           <Routes>
             <Route element={<AppLayout />}>
-              <Route path="/" element={<Navigate to="/signin" replace />} />
+              <Route path="/home" element={<Navigate to="/signin" replace />} />
               <Route index path="/home" element={<Home />} />
 
               {/* Others Page */}
