@@ -23,14 +23,14 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Datalyst Box",
-    path: "/",
+    path: "/home",
   },
 
   {
     name: "Forms",
     icon: <ListIcon />,
     subItems: [
-      { name: "Ecommerce", path: "/", pro: false },
+      { name: "Ecommerce", path: "/home", pro: false },
       { name: "Form Elements", path: "/form-elements", pro: false },
       { name: "Basic Tables", path: "/basic-tables", pro: false },
       { name: "Line Chart", path: "/line-chart", pro: false },

@@ -19,11 +19,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
+    const currentPath = window.location.pathname;
     if (savedToken) {
       setToken(savedToken);
       setIsAuthenticated(true);
+      if (currentPath == "/signin" || currentPath == "signup") {
+        navigate("/home");
+      }
     } else {
-      const currentPath = window.location.pathname;
       if (currentPath !== "/signup" && currentPath !== "/reset-password") {
         navigate("/signin");
       }
