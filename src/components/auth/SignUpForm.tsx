@@ -28,7 +28,6 @@ export default function SignUpForm() {
         password,
       });
       if (result) {
-        alert("Sign up successful!");
         setFirstName("");
         setLastName("");
         setEmail("");
