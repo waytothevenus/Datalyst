@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
 import ForgotPassword from "./pages/AuthPages/ForgotPassword";
@@ -26,13 +26,14 @@ import { ToastContainer } from "react-toastify";
 export default function App() {
   return (
     <>
-      <Router>
+      <BrowserRouter>
         <ToastContainer />
         <ScrollToTop />
         <AuthProvider>
           <Routes>
             <Route element={<AppLayout />}>
-              <Route index path="/" element={<Home />} />
+              <Route path="/" element={<Navigate to="/sign-in" replace />} />
+              <Route index path="/home" element={<Home />} />
 
               {/* Others Page */}
               <Route path="/profile" element={<UserProfiles />} />
@@ -67,7 +68,7 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
-      </Router>
+      </BrowserRouter>
     </>
   );
 }
